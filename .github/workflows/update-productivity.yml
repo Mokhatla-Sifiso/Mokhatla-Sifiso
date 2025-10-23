@@ -30,33 +30,33 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # GraphQL query: contributionsCollection for the authenticated user (repository owner)
           OWNER="${{ github.repository_owner }}"
           FIRST="${{ steps.dates.outputs.first }}"
           LAST="${{ steps.dates.outputs.last }}"
 
-          # Prepare GraphQL payload
-          read -r -d '' PAYLOAD <<'GRAPHQL'
+          PAYLOAD=$(cat <<EOF
           {
-            "query": "query($login: String!, $from: DateTime!, $to: DateTime!) { user(login: $login) { contributionsCollection(from: $from, to: $to) { contributionCalendar { totalContributions } } } }",
+            "query": "query(\$login: String!, \$from: DateTime!, \$to: DateTime!) { user(login: \$login) { contributionsCollection(from: \$from, to: \$to) { contributionCalendar { totalContributions } } } }",
             "variables": {
               "login": "${OWNER}",
               "from": "${FIRST}T00:00:00Z",
               "to": "${LAST}T23:59:59Z"
             }
           }
-GRAPHQL
+EOF
+          )
 
-          # Expand variables manually and call GraphQL
-          PAYLOAD=$(echo "$PAYLOAD" | sed "s/\${OWNER}/${OWNER}/g" | sed "s/\${FIRST}/${FIRST}/g" | sed "s/\${LAST}/${LAST}/g")
+          RESPONSE=$(curl -s -X POST \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "$PAYLOAD" \
+            https://api.github.com/graphql)
 
-          RESPONSE=$(curl -s -X POST -H "Authorization: Bearer $GITHUB_TOKEN" -H "Content-Type: application/json" -d "$PAYLOAD" https://api.github.com/graphql)
           echo "response=$RESPONSE" >> $GITHUB_OUTPUT
 
       - name: Parse contributions count
         id: parse
         run: |
-          # Get the number using jq
           echo "${{ steps.contributions.outputs.response }}" | jq -r '.data.user.contributionsCollection.contributionCalendar.totalContributions' > contrib_count.txt
           COUNT=$(cat contrib_count.txt)
           echo "count=$COUNT" >> $GITHUB_OUTPUT
@@ -72,7 +72,6 @@ if not p.exists():
     print("README.md not found",file=sys.stderr); sys.exit(1)
 
 count = int("""${{ steps.parse.outputs.count }}""")
-# Tiers definition
 tiers = [
     {"name":"Inactive","max":9,"emoji":"🪶"},
     {"name":"Emerging Contributor","max":49,"emoji":"🌱"},
@@ -83,12 +82,10 @@ tiers = [
 ]
 tier = next(t for t in tiers if count <= t["max"])
 next_tier = tiers[tiers.index(tier)+1] if tiers.index(tier)+1 < len(tiers) else tier
-# compute progress toward next.max; avoid divide by zero
 next_max = next_tier["max"]
 progress_pct = int(min(100, math.floor((count / next_max) * 100))) if next_max else 100
 blocks = int(round(progress_pct/5))
 bar = "█"*blocks + "░"*(20-blocks)
-# Build new section
 new_section = f"""
 | **Tier** | **Contributions / Month** | **Status** |
 |-----------|---------------------------|-------------|
@@ -104,7 +101,6 @@ new_section = f"""
 **Next Goal:** {next_tier["emoji"]} *{next_tier["name"]}* ({next_max}+)  
 **Progress:** `{count} / {next_max}` → {bar} {progress_pct}%
 """
-# Replace in README
 text = p.read_text(encoding="utf-8")
 new_text = re.sub(r"<!--START_SECTION:productivity-->[\\s\\S]*?<!--END_SECTION:productivity-->", f"<!--START_SECTION:productivity-->\n{new_section}\n<!--END_SECTION:productivity-->", text)
 p.write_text(new_text,encoding="utf-8")
