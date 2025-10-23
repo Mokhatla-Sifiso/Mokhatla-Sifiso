@@ -34,17 +34,9 @@ jobs:
           FIRST="${{ steps.dates.outputs.first }}"
           LAST="${{ steps.dates.outputs.last }}"
 
-          PAYLOAD=$(cat <<EOF
-          {
-            "query": "query(\$login: String!, \$from: DateTime!, \$to: DateTime!) { user(login: \$login) { contributionsCollection(from: \$from, to: \$to) { contributionCalendar { totalContributions } } } }",
-            "variables": {
-              "login": "${OWNER}",
-              "from": "${FIRST}T00:00:00Z",
-              "to": "${LAST}T23:59:59Z"
-            }
-          }
-EOF
-          )
+          # Build JSON payload safely using jq to avoid YAML parsing issues with braces/quotes
+          PAYLOAD=$(jq -nc --arg login "$OWNER" --arg from "${FIRST}T00:00:00Z" --arg to "${LAST}T23:59:59Z" \
+            '{query:"query($login: String!, $from: DateTime!, $to: DateTime!){ user(login: $login){ contributionsCollection(from: $from, to: $to){ contributionCalendar{ totalContributions } } } }", variables:{login:$login, from:$from, to:$to}}')
 
           RESPONSE=$(curl -s -X POST \
             -H "Authorization: Bearer $GITHUB_TOKEN" \
@@ -65,47 +57,47 @@ EOF
         id: update_readme
         run: |
           python3 - <<'PY'
-import re,sys,json,math
-from pathlib import Path
-p = Path("README.md")
-if not p.exists():
-    print("README.md not found",file=sys.stderr); sys.exit(1)
-
-count = int("""${{ steps.parse.outputs.count }}""")
-tiers = [
-    {"name":"Inactive","max":9,"emoji":"🪶"},
-    {"name":"Emerging Contributor","max":49,"emoji":"🌱"},
-    {"name":"Consistent Developer","max":99,"emoji":"⚙️"},
-    {"name":"Productive Developer","max":199,"emoji":"💻"},
-    {"name":"Highly Active Maintainer","max":399,"emoji":"🚀"},
-    {"name":"Power Contributor","max":10**9,"emoji":"🔥"},
-]
-tier = next(t for t in tiers if count <= t["max"])
-next_tier = tiers[tiers.index(tier)+1] if tiers.index(tier)+1 < len(tiers) else tier
-next_max = next_tier["max"]
-progress_pct = int(min(100, math.floor((count / next_max) * 100))) if next_max else 100
-blocks = int(round(progress_pct/5))
-bar = "█"*blocks + "░"*(20-blocks)
-new_section = f"""
-| **Tier** | **Contributions / Month** | **Status** |
-|-----------|---------------------------|-------------|
-| 🪶 Tier 0 – Inactive | 0–9 | ░░░░░░░░░░░░░░░░░░░░░░ 0% |
-| 🌱 Tier 1 – Emerging Contributor | 10–49 | ███░░░░░░░░░░░░░░░░░░░ 20% |
-| ⚙️ Tier 2 – Consistent Developer | 50–99 | ███████░░░░░░░░░░░░░░░ 40% |
-| 💻 Tier 3 – Productive Developer | 100–199 | ████████████░░░░░░░░░░ 60% |
-| 🚀 Tier 4 – Highly Active Maintainer | 200–399 | █████████████████░░░░ 80% |
-| 🔥 Tier 5 – Power Contributor | 400+ | ██████████████████████ 100% 🏆 |
-
-**Current Status:** {tier["emoji"]} *{tier["name"]}*  
-**Contributions this month:** `{count}`  
-**Next Goal:** {next_tier["emoji"]} *{next_tier["name"]}* ({next_max}+)  
-**Progress:** `{count} / {next_max}` → {bar} {progress_pct}%
-"""
-text = p.read_text(encoding="utf-8")
-new_text = re.sub(r"<!--START_SECTION:productivity-->[\\s\\S]*?<!--END_SECTION:productivity-->", f"<!--START_SECTION:productivity-->\n{new_section}\n<!--END_SECTION:productivity-->", text)
-p.write_text(new_text,encoding="utf-8")
-print("README updated")
-PY
+          import re,sys,json,math
+          from pathlib import Path
+          p = Path("README.md")
+          if not p.exists():
+              print("README.md not found",file=sys.stderr); sys.exit(1)
+          
+          count = int("""${{ steps.parse.outputs.count }}""")
+          tiers = [
+              {"name":"Inactive","max":9,"emoji":"🪶"},
+              {"name":"Emerging Contributor","max":49,"emoji":"🌱"},
+              {"name":"Consistent Developer","max":99,"emoji":"⚙️"},
+              {"name":"Productive Developer","max":199,"emoji":"💻"},
+              {"name":"Highly Active Maintainer","max":399,"emoji":"🚀"},
+              {"name":"Power Contributor","max":10**9,"emoji":"🔥"},
+          ]
+          tier = next(t for t in tiers if count <= t["max"])
+          next_tier = tiers[tiers.index(tier)+1] if tiers.index(tier)+1 < len(tiers) else tier
+          next_max = next_tier["max"]
+          progress_pct = int(min(100, math.floor((count / next_max) * 100))) if next_max else 100
+          blocks = int(round(progress_pct/5))
+          bar = "█"*blocks + "░"*(20-blocks)
+          new_section = f"""
+          | **Tier** | **Contributions / Month** | **Status** |
+          |-----------|---------------------------|-------------|
+          | 🪶 Tier 0 – Inactive | 0–9 | ░░░░░░░░░░░░░░░░░░░░░░ 0% |
+          | 🌱 Tier 1 – Emerging Contributor | 10–49 | ███░░░░░░░░░░░░░░░░░░░ 20% |
+          | ⚙️ Tier 2 – Consistent Developer | 50–99 | ███████░░░░░░░░░░░░░░░ 40% |
+          | 💻 Tier 3 – Productive Developer | 100–199 | ████████████░░░░░░░░░░ 60% |
+          | 🚀 Tier 4 – Highly Active Maintainer | 200–399 | █████████████████░░░░ 80% |
+          | 🔥 Tier 5 – Power Contributor | 400+ | ██████████████████████ 100% 🏆 |
+          
+          **Current Status:** {tier["emoji"]} *{tier["name"]}*  
+          **Contributions this month:** `{count}`  
+          **Next Goal:** {next_tier["emoji"]} *{next_tier["name"]}* ({next_max}+)  
+          **Progress:** `{count} / {next_max}` → {bar} {progress_pct}%
+          """
+          text = p.read_text(encoding="utf-8")
+          new_text = re.sub(r"<!--START_SECTION:productivity-->[\s\S]*?<!--END_SECTION:productivity-->", f"<!--START_SECTION:productivity-->\n{new_section}\n<!--END_SECTION:productivity-->", text)
+          p.write_text(new_text,encoding="utf-8")
+          print("README updated")
+          PY
 
       - name: Commit and push changes
         run: |
