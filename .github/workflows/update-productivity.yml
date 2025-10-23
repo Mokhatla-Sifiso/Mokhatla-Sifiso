@@ -1,7 +1,7 @@
 name: Update GitHub Productivity Tracker
 on:
   schedule:
-    - cron: "0 6 * * *" 
+    - cron: "0 6 * * *" # daily at 06:00 UTC
   workflow_dispatch:
 
 permissions:
@@ -84,19 +84,36 @@ jobs:
           blocks = int(round(progress_pct/5))
           bar = "█"*blocks + "░"*(20-blocks)
 
-          new_section = f"""| **Tier** | **Contributions / Month** | **Status** |
-          |-----------|---------------------------|-------------|
-          | 🪶 Tier 0 – Inactive | 0–9 | ░░░░░░░░░░░░░░░░░░░░░░ 0% |
-          | 🌱 Tier 1 – Emerging Contributor | 10–49 | ███░░░░░░░░░░░░░░░░░░░ 20% |
-          | ⚙️ Tier 2 – Consistent Developer | 50–99 | ███████░░░░░░░░░░░░░░░ 40% |
-          | 💻 Tier 3 – Productive Developer | 100–199 | ████████████░░░░░░░░░░ 60% |
-          | 🚀 Tier 4 – Highly Active Maintainer | 200–399 | █████████████████░░░░ 80% |
-          | 🔥 Tier 5 – Power Contributor | 400+ | ██████████████████████ 100% 🏆 |
+          # Determine tier status indicator
+          tier_idx = tiers.index(tier)
+          status_indicators = []
+          for i, t in enumerate(tiers):
+              if i < tier_idx:
+                  status_indicators.append("✓")
+              elif i == tier_idx:
+                  status_indicators.append("●")
+              else:
+                  status_indicators.append("○")
+          
+          new_section = f"""### Monthly Contribution Analysis
 
-          **Current Status:** {tier["emoji"]} *{tier["name"]}*  
-          **Contributions this month:** `{count}`  
-          **Next Goal:** {next_tier["emoji"]} *{next_tier["name"]}* ({next_max}+)  
-          **Progress:** `{count} / {next_max}` → {bar} {progress_pct}%
+          | Tier Level | Contribution Range | Status | Progress |
+          |:-----------|:------------------:|:------:|:---------|
+          | **Level 0** – Inactive | 0–9 | {status_indicators[0]} | Baseline activity |
+          | **Level 1** – Emerging Contributor | 10–49 | {status_indicators[1]} | Building consistency |
+          | **Level 2** – Consistent Developer | 50–99 | {status_indicators[2]} | Regular contributions |
+          | **Level 3** – Productive Developer | 100–199 | {status_indicators[3]} | High engagement |
+          | **Level 4** – Highly Active Maintainer | 200–399 | {status_indicators[4]} | Sustained excellence |
+          | **Level 5** – Power Contributor | 400+ | {status_indicators[5]} | Elite performance |
+
+          #### Current Performance Summary
+          
+          - **Active Tier:** Level {tier_idx} – {tier["name"]}
+          - **Monthly Contributions:** {count}
+          - **Next Milestone:** Level {tiers.index(next_tier)} – {next_tier["name"]} ({next_max} contributions)
+          - **Completion:** {bar} **{progress_pct}%** ({count}/{next_max})
+          
+          > **Note:** Metrics update daily at 06:00 UTC based on GitHub contribution data for the current calendar month.
           """
 
           text = p.read_text(encoding="utf-8")
