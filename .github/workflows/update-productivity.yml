@@ -1,7 +1,7 @@
 name: Update GitHub Productivity Tracker
 on:
   schedule:
-    - cron: "0 6 * * *" # daily at 06:00 UTC
+    - cron: "0 6 * * *" 
   workflow_dispatch:
 
 permissions:
@@ -54,20 +54,20 @@ jobs:
 
       - name: Update README section (python)
         id: update_readme
+        env:
+          CONTRIB_COUNT: ${{ steps.parse.outputs.count }}
         run: |
-          python3 - <<'PY'
-          import textwrap, sys
-          script = textwrap.dedent("""\
-          import re, sys, json, math
+          python3 <<'PYTHON_SCRIPT'
+          import re, math, os
           from pathlib import Path
 
           p = Path("README.md")
           if not p.exists():
-              print("README.md not found", file=sys.stderr)
-              sys.exit(1)
+              print("README.md not found")
+              exit(1)
 
-          # Get count from environment variable or output
-          count = int("${{ steps.parse.outputs.count }}")
+          count = int(os.environ.get("CONTRIB_COUNT", "0"))
+          
           tiers = [
               {"name":"Inactive","max":9,"emoji":"🪶"},
               {"name":"Emerging Contributor","max":49,"emoji":"🌱"},
@@ -84,8 +84,7 @@ jobs:
           blocks = int(round(progress_pct/5))
           bar = "█"*blocks + "░"*(20-blocks)
 
-          new_section = f"""
-          | **Tier** | **Contributions / Month** | **Status** |
+          new_section = f"""| **Tier** | **Contributions / Month** | **Status** |
           |-----------|---------------------------|-------------|
           | 🪶 Tier 0 – Inactive | 0–9 | ░░░░░░░░░░░░░░░░░░░░░░ 0% |
           | 🌱 Tier 1 – Emerging Contributor | 10–49 | ███░░░░░░░░░░░░░░░░░░░ 20% |
@@ -102,15 +101,13 @@ jobs:
 
           text = p.read_text(encoding="utf-8")
           new_text = re.sub(
-              r"<!--START_SECTION:productivity-->[\\s\\S]*?<!--END_SECTION:productivity-->",
-              f"<!--START_SECTION:productivity-->\\n{new_section}\\n<!--END_SECTION:productivity-->",
+              r"<!--START_SECTION:productivity-->[\s\S]*?<!--END_SECTION:productivity-->",
+              f"<!--START_SECTION:productivity-->\n{new_section}\n<!--END_SECTION:productivity-->",
               text
           )
           p.write_text(new_text, encoding="utf-8")
           print("README updated")
-          """)
-          exec(script)
-          PY
+          PYTHON_SCRIPT
 
       - name: Commit and push changes
         run: |
