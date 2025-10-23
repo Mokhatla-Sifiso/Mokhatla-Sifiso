@@ -46,9 +46,10 @@ jobs:
 
       - name: Parse contributions count
         id: parse
+        env:
+          RESPONSE: ${{ steps.contributions.outputs.response }}
         run: |
-          printf '%s' "${{ steps.contributions.outputs.response }}" | jq -r '.data.user.contributionsCollection.contributionCalendar.totalContributions' > contrib_count.txt
-          COUNT=$(cat contrib_count.txt)
+          COUNT=$(echo "$RESPONSE" | jq -r '.data.user.contributionsCollection.contributionCalendar.totalContributions')
           echo "count=$COUNT" >> $GITHUB_OUTPUT
 
       - name: Update README section (python)
