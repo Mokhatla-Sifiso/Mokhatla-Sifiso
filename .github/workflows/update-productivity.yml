@@ -1,0 +1,120 @@
+name: Update GitHub Productivity Tracker
+on:
+  schedule:
+    - cron: "0 6 * * *" # daily at 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  # read access to user data is implicit for GITHUB_TOKEN; if your org blocks it, you may need to adjust.
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Get month date range
+        id: dates
+        run: |
+          FIRST_DAY=$(date -u +%Y-%m-01)
+          # last day: get next month first day minus one day
+          NEXT_MONTH_FIRST=$(date -u -d "$(date -u +%Y-%m-01) +1 month" +%Y-%m-01)
+          LAST_DAY=$(date -u -d "$NEXT_MONTH_FIRST -1 day" +%Y-%m-%d)
+          echo "first=$FIRST_DAY" >> $GITHUB_OUTPUT
+          echo "last=$LAST_DAY" >> $GITHUB_OUTPUT
+
+      - name: Query GitHub GraphQL for contributions in month
+        id: contributions
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # GraphQL query: contributionsCollection for the authenticated user (repository owner)
+          OWNER="${{ github.repository_owner }}"
+          FIRST="${{ steps.dates.outputs.first }}"
+          LAST="${{ steps.dates.outputs.last }}"
+
+          # Prepare GraphQL payload
+          read -r -d '' PAYLOAD <<'GRAPHQL'
+          {
+            "query": "query($login: String!, $from: DateTime!, $to: DateTime!) { user(login: $login) { contributionsCollection(from: $from, to: $to) { contributionCalendar { totalContributions } } } }",
+            "variables": {
+              "login": "${OWNER}",
+              "from": "${FIRST}T00:00:00Z",
+              "to": "${LAST}T23:59:59Z"
+            }
+          }
+GRAPHQL
+
+          # Expand variables manually and call GraphQL
+          PAYLOAD=$(echo "$PAYLOAD" | sed "s/\${OWNER}/${OWNER}/g" | sed "s/\${FIRST}/${FIRST}/g" | sed "s/\${LAST}/${LAST}/g")
+
+          RESPONSE=$(curl -s -X POST -H "Authorization: Bearer $GITHUB_TOKEN" -H "Content-Type: application/json" -d "$PAYLOAD" https://api.github.com/graphql)
+          echo "response=$RESPONSE" >> $GITHUB_OUTPUT
+
+      - name: Parse contributions count
+        id: parse
+        run: |
+          # Get the number using jq
+          echo "${{ steps.contributions.outputs.response }}" | jq -r '.data.user.contributionsCollection.contributionCalendar.totalContributions' > contrib_count.txt
+          COUNT=$(cat contrib_count.txt)
+          echo "count=$COUNT" >> $GITHUB_OUTPUT
+
+      - name: Update README section (python)
+        id: update_readme
+        run: |
+          python3 - <<'PY'
+import re,sys,json,math
+from pathlib import Path
+p = Path("README.md")
+if not p.exists():
+    print("README.md not found",file=sys.stderr); sys.exit(1)
+
+count = int("""${{ steps.parse.outputs.count }}""")
+# Tiers definition
+tiers = [
+    {"name":"Inactive","max":9,"emoji":"🪶"},
+    {"name":"Emerging Contributor","max":49,"emoji":"🌱"},
+    {"name":"Consistent Developer","max":99,"emoji":"⚙️"},
+    {"name":"Productive Developer","max":199,"emoji":"💻"},
+    {"name":"Highly Active Maintainer","max":399,"emoji":"🚀"},
+    {"name":"Power Contributor","max":10**9,"emoji":"🔥"},
+]
+tier = next(t for t in tiers if count <= t["max"])
+next_tier = tiers[tiers.index(tier)+1] if tiers.index(tier)+1 < len(tiers) else tier
+# compute progress toward next.max; avoid divide by zero
+next_max = next_tier["max"]
+progress_pct = int(min(100, math.floor((count / next_max) * 100))) if next_max else 100
+blocks = int(round(progress_pct/5))
+bar = "█"*blocks + "░"*(20-blocks)
+# Build new section
+new_section = f"""
+| **Tier** | **Contributions / Month** | **Status** |
+|-----------|---------------------------|-------------|
+| 🪶 Tier 0 – Inactive | 0–9 | ░░░░░░░░░░░░░░░░░░░░░░ 0% |
+| 🌱 Tier 1 – Emerging Contributor | 10–49 | ███░░░░░░░░░░░░░░░░░░░ 20% |
+| ⚙️ Tier 2 – Consistent Developer | 50–99 | ███████░░░░░░░░░░░░░░░ 40% |
+| 💻 Tier 3 – Productive Developer | 100–199 | ████████████░░░░░░░░░░ 60% |
+| 🚀 Tier 4 – Highly Active Maintainer | 200–399 | █████████████████░░░░ 80% |
+| 🔥 Tier 5 – Power Contributor | 400+ | ██████████████████████ 100% 🏆 |
+
+**Current Status:** {tier["emoji"]} *{tier["name"]}*  
+**Contributions this month:** `{count}`  
+**Next Goal:** {next_tier["emoji"]} *{next_tier["name"]}* ({next_max}+)  
+**Progress:** `{count} / {next_max}` → {bar} {progress_pct}%
+"""
+# Replace in README
+text = p.read_text(encoding="utf-8")
+new_text = re.sub(r"<!--START_SECTION:productivity-->[\\s\\S]*?<!--END_SECTION:productivity-->", f"<!--START_SECTION:productivity-->\n{new_section}\n<!--END_SECTION:productivity-->", text)
+p.write_text(new_text,encoding="utf-8")
+print("README updated")
+PY
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "chore: update productivity tracker" || echo "No changes to commit"
+          git push
