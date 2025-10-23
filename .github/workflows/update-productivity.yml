@@ -49,7 +49,7 @@ jobs:
       - name: Parse contributions count
         id: parse
         run: |
-          echo "${{ steps.contributions.outputs.response }}" | jq -r '.data.user.contributionsCollection.contributionCalendar.totalContributions' > contrib_count.txt
+          echo '${{ steps.contributions.outputs.response }}' | jq -r '.data.user.contributionsCollection.contributionCalendar.totalContributions' > contrib_count.txt
           COUNT=$(cat contrib_count.txt)
           echo "count=$COUNT" >> $GITHUB_OUTPUT
 
