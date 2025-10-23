@@ -6,7 +6,6 @@ on:
 
 permissions:
   contents: write
-  # read access to user data is implicit for GITHUB_TOKEN; if your org blocks it, you may need to adjust.
 
 jobs:
   update:
@@ -19,7 +18,6 @@ jobs:
         id: dates
         run: |
           FIRST_DAY=$(date -u +%Y-%m-01)
-          # last day: get next month first day minus one day
           NEXT_MONTH_FIRST=$(date -u -d "$(date -u +%Y-%m-01) +1 month" +%Y-%m-01)
           LAST_DAY=$(date -u -d "$NEXT_MONTH_FIRST -1 day" +%Y-%m-%d)
           echo "first=$FIRST_DAY" >> $GITHUB_OUTPUT
@@ -34,7 +32,7 @@ jobs:
           FIRST="${{ steps.dates.outputs.first }}"
           LAST="${{ steps.dates.outputs.last }}"
 
-          # Build JSON payload safely using jq to avoid YAML parsing issues with braces/quotes
+          # Build JSON payload safely using jq
           PAYLOAD=$(jq -nc --arg login "$OWNER" --arg from "${FIRST}T00:00:00Z" --arg to "${LAST}T23:59:59Z" \
             '{query:"query($login: String!, $from: DateTime!, $to: DateTime!){ user(login: $login){ contributionsCollection(from: $from, to: $to){ contributionCalendar{ totalContributions } } } }", variables:{login:$login, from:$from, to:$to}}')
 
@@ -49,7 +47,7 @@ jobs:
       - name: Parse contributions count
         id: parse
         run: |
-          echo '${{ steps.contributions.outputs.response }}' | jq -r '.data.user.contributionsCollection.contributionCalendar.totalContributions' > contrib_count.txt
+          printf '%s' "${{ steps.contributions.outputs.response }}" | jq -r '.data.user.contributionsCollection.contributionCalendar.totalContributions' > contrib_count.txt
           COUNT=$(cat contrib_count.txt)
           echo "count=$COUNT" >> $GITHUB_OUTPUT
 
@@ -57,13 +55,18 @@ jobs:
         id: update_readme
         run: |
           python3 - <<'PY'
-          import re,sys,json,math
+          import textwrap, sys
+          script = textwrap.dedent("""\
+          import re, sys, json, math
           from pathlib import Path
+
           p = Path("README.md")
           if not p.exists():
-              print("README.md not found",file=sys.stderr); sys.exit(1)
-          
-          count = int("""${{ steps.parse.outputs.count }}""")
+              print("README.md not found", file=sys.stderr)
+              sys.exit(1)
+
+          # Get count from environment variable or output
+          count = int("${{ steps.parse.outputs.count }}")
           tiers = [
               {"name":"Inactive","max":9,"emoji":"🪶"},
               {"name":"Emerging Contributor","max":49,"emoji":"🌱"},
@@ -72,12 +75,14 @@ jobs:
               {"name":"Highly Active Maintainer","max":399,"emoji":"🚀"},
               {"name":"Power Contributor","max":10**9,"emoji":"🔥"},
           ]
+
           tier = next(t for t in tiers if count <= t["max"])
           next_tier = tiers[tiers.index(tier)+1] if tiers.index(tier)+1 < len(tiers) else tier
           next_max = next_tier["max"]
           progress_pct = int(min(100, math.floor((count / next_max) * 100))) if next_max else 100
           blocks = int(round(progress_pct/5))
           bar = "█"*blocks + "░"*(20-blocks)
+
           new_section = f"""
           | **Tier** | **Contributions / Month** | **Status** |
           |-----------|---------------------------|-------------|
@@ -87,16 +92,23 @@ jobs:
           | 💻 Tier 3 – Productive Developer | 100–199 | ████████████░░░░░░░░░░ 60% |
           | 🚀 Tier 4 – Highly Active Maintainer | 200–399 | █████████████████░░░░ 80% |
           | 🔥 Tier 5 – Power Contributor | 400+ | ██████████████████████ 100% 🏆 |
-          
+
           **Current Status:** {tier["emoji"]} *{tier["name"]}*  
           **Contributions this month:** `{count}`  
           **Next Goal:** {next_tier["emoji"]} *{next_tier["name"]}* ({next_max}+)  
           **Progress:** `{count} / {next_max}` → {bar} {progress_pct}%
           """
+
           text = p.read_text(encoding="utf-8")
-          new_text = re.sub(r"<!--START_SECTION:productivity-->[\s\S]*?<!--END_SECTION:productivity-->", f"<!--START_SECTION:productivity-->\n{new_section}\n<!--END_SECTION:productivity-->", text)
-          p.write_text(new_text,encoding="utf-8")
+          new_text = re.sub(
+              r"<!--START_SECTION:productivity-->[\\s\\S]*?<!--END_SECTION:productivity-->",
+              f"<!--START_SECTION:productivity-->\\n{new_section}\\n<!--END_SECTION:productivity-->",
+              text
+          )
+          p.write_text(new_text, encoding="utf-8")
           print("README updated")
+          """)
+          exec(script)
           PY
 
       - name: Commit and push changes
