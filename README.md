@@ -5,8 +5,8 @@
 
 | Tier Level | Contribution Range | Status | Progress |
 |:-----------|:------------------:|:------:|:---------|
-| **Level 0** – Inactive | 0–9 | ● | Baseline activity |
-| **Level 1** – Emerging Contributor | 10–49 | ○ | Building consistency |
+| **Level 0** – Inactive | 0–9 | ✓ | Baseline activity |
+| **Level 1** – Emerging Contributor | 10–49 | ● | Building consistency |
 | **Level 2** – Consistent Developer | 50–99 | ○ | Regular contributions |
 | **Level 3** – Productive Developer | 100–199 | ○ | High engagement |
 | **Level 4** – Highly Active Maintainer | 200–399 | ○ | Sustained excellence |
@@ -14,10 +14,10 @@
 
 #### Current Performance Summary
 
-- **Active Tier:** Level 0 – Inactive
-- **Monthly Contributions:** 7
-- **Next Milestone:** Level 1 – Emerging Contributor (49 contributions)
-- **Completion:** ███░░░░░░░░░░░░░░░░░ **14%** (7/49)
+- **Active Tier:** Level 1 – Emerging Contributor
+- **Monthly Contributions:** 13
+- **Next Milestone:** Level 2 – Consistent Developer (99 contributions)
+- **Completion:** ███░░░░░░░░░░░░░░░░░ **13%** (13/99)
 
 > **Note:** Metrics update daily at 06:00 UTC based on GitHub contribution data for the current calendar month.
 
