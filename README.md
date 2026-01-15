@@ -1,39 +1,24 @@
-# Mzwakhe Mokhatla
-### Senior Software Engineer
+## 🚀 GitHub Productivity Tracker (Auto-Updating)
 
-[![Email](https://img.shields.io/badge/email-mokhatla.mzwakhe@gmail.com-D14836?style=flat-square)](mailto:mokhatla.mzwakhe@gmail.com)
-[![LinkedIn](https://img.shields.io/badge/linkedin-in/mzwakhe--mokhatla-0A66C2?style=flat-square)](https://linkedin.com/in/mzwakhe-mokhatla-1203a7188)
+<!--START_SECTION:productivity-->
+### Monthly Contribution Analysis
 
----
+| Tier Level | Contribution Range | Status | Progress |
+|:-----------|:------------------:|:------:|:---------|
+| **Level 0** – Inactive | 0–9 | ● | Baseline activity |
+| **Level 1** – Emerging Contributor | 10–49 | ○ | Building consistency |
+| **Level 2** – Consistent Developer | 50–99 | ○ | Regular contributions |
+| **Level 3** – Productive Developer | 100–199 | ○ | High engagement |
+| **Level 4** – Highly Active Maintainer | 200–399 | ○ | Sustained excellence |
+| **Level 5** – Power Contributor | 400+ | ○ | Elite performance |
 
-## About
+#### Current Performance Summary
 
-Full-stack engineer with 5+ years specializing in React, TypeScript, Microfrontends, and Azure.  
-Delivered scalable solutions at MTN, Accenture, and Nybble Technologies.  
-Passionate about clean architecture, team mentoring, and sustainable tech.
+- **Active Tier:** Level 0 – Inactive
+- **Monthly Contributions:** 0
+- **Next Milestone:** Level 1 – Emerging Contributor (49 contributions)
+- **Completion:** ░░░░░░░░░░░░░░░░░░░░ **0%** (0/49)
 
----
+> **Note:** Metrics update daily at 06:00 UTC based on GitHub contribution data for the current calendar month.
 
-## Tech Stack
-
-**Frontend:** React · TypeScript · Next.js · Microfrontends  
-**Backend:** Node.js · NestJS · Java · Spring  
-**Cloud:** Azure · AWS · Google Cloud  
-**Databases:** MongoDB · PostgreSQL · MySQL  
-**Tools:** Docker · Git · Jest · Figma  
-
----
-
-## GitHub
-
-![Stats](https://github-readme-stats.vercel.app/api?username=Mokhatla-Sifiso&show_icons=true&count_private=true&theme=default&hide_title=true)
-![Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Mokhatla-Sifiso&layout=compact&theme=default&hide_title=true)
-
----
-
-## Contact
-
-Available for technical discussions and collaboration opportunities.
-
-📧 **mokhatla.mzwakhe@gmail.com**  
-🔗 **linkedin.com/in/mzwakhe-mokhatla-1203a7188**
+<!--END_SECTION:productivity-->
