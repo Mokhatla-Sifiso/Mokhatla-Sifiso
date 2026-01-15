@@ -65,21 +65,21 @@ Results-driven **Software Engineer** with **5+ years** of experience in full-sta
 
 <div align="center">
 
-### 📈 **Overall Activity**
-![](https://github-readme-stats.vercel.app/api?username=Mokhatla-Sifiso&show_icons=true&theme=merko&hide_border=true&include_all_commits=true&count_private=true&line_height=24)
+### 📈 Overall Activity
+![](https://github-readme-stats.vercel.app/api?username=Mokhatla-Sifiso&theme=merko&hide_border=false&include_all_commits=true&count_private=true)<br/>
 
-### 🔥 **Streak Stats**
-![](https://github-readme-streak-stats.herokuapp.com/?user=Mokhatla-Sifiso&theme=merko&hide_border=true)
+### 🔥 Streak Stats
+![](https://github-readme-streak-stats.herokuapp.com/?user=Mokhatla-Sifiso&theme=merko&hide_border=false)<br/>
 
-### 💻 **Top Languages**
-![](https://github-readme-stats.vercel.app/api/top-langs/?username=Mokhatla-Sifiso&theme=merko&hide_border=true&layout=compact&langs_count=8&card_width=350)
+### 💻 Top Languages
+![](https://github-readme-stats.vercel.app/api/top-langs/?username=Mokhatla-Sifiso&theme=merko&hide_border=false&include_all_commits=true&count_private=true&layout=compact)
 
-### 🏆 **Achievements**
-![](https://github-profile-trophy.vercel.app/?username=Mokhatla-Sifiso&theme=merko&column=7&no-frame=true&margin-w=10)
+### 🏆 GitHub Trophies
+![](https://github-profile-trophy.vercel.app/?username=Mokhatla-Sifiso&theme=merko&no-frame=false&no-bg=true&margin-w=4)
 
 </div>
 
-## 📌 **Key Highlights**
+## 📌 Key Highlights
 
 - **Microfrontends Specialist**: Extensive experience with modular frontend architecture
 - **Cloud-Native Development**: Production experience with Azure, AWS, and GCP
@@ -92,7 +92,7 @@ Results-driven **Software Engineer** with **5+ years** of experience in full-sta
 **Last Updated**: January 2024  
 **Profile visitors**: ![Visitor Count](https://komarev.com/ghpvc/?username=Mokhatla-Sifiso&style=flat&color=orange)
 
-## 📫 **Let's Connect!**
+## 📫 Let's Connect!
 
 Always open to discussing tech, collaboration opportunities, or just chatting about the latest in software development and AI trends. Feel free to reach out via LinkedIn or Email!
 
