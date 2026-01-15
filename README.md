@@ -116,16 +116,6 @@ Results-driven Software Engineer with 5+ years of experience building scalable s
 <img src="https://www.vectorlogo.zone/logos/storybookjs/storybookjs-icon.svg" width="40" height="40" alt="Storybook"/>
 </p>
 
----
-
-## 📌 Profile Insights
-
-<div align="center">
-
-![Profile Views](https://komarev.com/ghpvc/?username=Mokhatla-Sifiso&color=58a6ff&style=flat-square)
-![Followers](https://img.shields.io/github/followers/Mokhatla-Sifiso?style=flat-square&color=58a6ff&labelColor=0d1117)
-
-</div>
 
 ---
 
