@@ -31,13 +31,17 @@
 
 <div align="center">
 
-| **Overall Activity** | **Coding Streak** |
-|:---------------------:|:------------------:|
-| ![Stats](https://github-readme-stats.vercel.app/api?username=Mokhatla-Sifiso&show_icons=true&theme=onedark&hide_border=true&bg_color=0d1117&title_color=58a6ff&icon_color=1f6feb&text_color=c9d1d9&border_radius=10) | ![Streak](https://github-readme-streak-stats.herokuapp.com/?user=Mokhatla-Sifiso&theme=onedark&hide_border=true&background=0d1117&ring=58a6ff&fire=1f6feb&currStreakLabel=58a6ff) |
+### 📈 Activity Overview
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Mokhatla-Sifiso&show_icons=true&theme=dark&hide_border=true&include_all_commits=true&count_private=true&bg_color=0d1117&title_color=58a6ff&icon_color=1f6feb&text_color=8b949e)
 
-| **Top Languages** | **Achievements** |
-|:------------------:|:----------------:|
-| ![Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Mokhatla-Sifiso&layout=compact&theme=onedark&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&border_radius=10) | ![Trophies](https://github-profile-trophy.vercel.app/?username=Mokhatla-Sifiso&theme=onedark&no-frame=true&no-bg=true&margin-w=10&margin-h=10&column=4) |
+### 🔥 Contribution Streak
+![GitHub Streak](https://streak-stats.demolab.com/?user=Mokhatla-Sifiso&theme=dark&hide_border=true&background=0d1117&ring=58a6ff&fire=1f6feb&currStreakLabel=58a6ff)
+
+### 💻 Top Languages
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Mokhatla-Sifiso&layout=compact&theme=dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=8b949e&langs_count=8)
+
+### 🏆 Achievements
+![GitHub Trophies](https://github-profile-trophy.vercel.app/?username=Mokhatla-Sifiso&theme=dark&no-frame=true&no-bg=true&margin-w=4&column=7)
 
 </div>
 
