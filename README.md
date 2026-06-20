@@ -4,8 +4,6 @@ Full-stack engineer based in Pretoria, South Africa. I build production systems 
 
 Most recently I was acting Technical Lead on **StudioSync**, an internal payroll and contract-management platform at MTN S2 that replaced spreadsheet-based operations across India, the Americas, and South Africa. I led sprint delivery, mentored junior engineers, owned the PostgreSQL data layer, and shaped the microservice and microfrontend architecture in TypeScript.
 
-**Open to remote roles** — full-time or contract, US / EU / global. Comfortable working across time zones.
-
 ---
 
 ## What I work on
