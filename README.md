@@ -1,126 +1,39 @@
 # Mzwakhe Mokhatla
 
-> Full-Stack Engineer | React Specialist | Azure Cloud Developer
+Full-stack engineer based in Pretoria, South Africa. I build production systems with React, TypeScript, and Node — currently focused on microfrontend architectures and platform engineering.
 
-Results-driven Software Engineer with 5+ years of experience building scalable solutions. Specialized in React ecosystems, TypeScript, and cloud architecture. Previously at MTN, Accenture, and Nybble Technologies.
+Most recently I was acting Technical Lead on **StudioSync**, an internal payroll and contract-management platform at MTN S2 that replaced spreadsheet-based operations across India, the Americas, and South Africa. I led sprint delivery, mentored junior engineers, owned the PostgreSQL data layer, and shaped the microservice and microfrontend architecture in TypeScript.
 
----
-
-## 📬 Connect
-
-[<img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white" height="28"/>](https://linkedin.com/in/mzwakhe-mokhatla-1203a7188)
-[<img src="https://img.shields.io/badge/Email-EA4335?style=flat&logo=gmail&logoColor=white" height="28"/>](mailto:mokhatla.mzwakhe@gmail.com)
+**Open to remote roles** — full-time or contract, US / EU / global. Comfortable working across time zones.
 
 ---
 
-## 📊 GitHub Analytics
+## What I work on
 
-<div align="center">
-  
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Mokhatla-Sifiso&show_icons=true&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&icon_color=1f6feb&text_color=c9d1d9&include_all_commits=true&count_private=true)
+- **Frontend at scale** — React, TypeScript, Next.js, microfrontend composition, design-system standardization
+- **APIs and services** — NestJS, Node, REST, PostgreSQL, with a focus on clean contracts and testability
+- **Cloud delivery** — Azure (Functions, DevOps pipelines), Docker, Pulumi-based IaC, GitHub Actions
 
-![Streak Stats](https://nirzak-streak-stats.vercel.app/?user=Mokhatla-Sifiso&theme=github-dark-blue&hide_border=true&background=0d1117&stroke=58a6ff&ring=58a6ff&fire=1f6feb&currStreakLabel=c9d1d9)
-
-</div>
-
-### 📈 Contribution Activity
-
-<div align="center">
-
-![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=Mokhatla-Sifiso&theme=react-dark&hide_border=true&bg_color=0d1117&color=58a6ff&line=1f6feb&point=c9d1d9&area=true)
-
-</div>
-
-### 🔥 Code Distribution
-
-<div align="center">
-
-[![Top Languages](https://github-readme-stats-git-masterrstaa-rickstaa.vercel.app/api/top-langs/?username=Mokhatla-Sifiso&layout=compact&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=8)](https://github.com/Mokhatla-Sifiso)
-
-</div>
-
-### 🏆 Achievement Showcase
-
-<div align="center">
-
-[![Trophies](https://github-profile-trophy.vercel.app/?username=Mokhatla-Sifiso&theme=onestar&no-frame=false&no-bg=false&row=2&column=3)](https://github.com/Mokhatla-Sifiso)
-
-</div>
+I care most about shipping reliably, writing code other people can pick up, and not over-engineering things.
 
 ---
 
-## 🛠️ Technology Stack
+## Selected work
 
-### Frontend
-<p>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="40" height="40" alt="React"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" width="40" height="40" alt="TypeScript"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" width="40" height="40" alt="Next.js"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nuxtjs/nuxtjs-original.svg" width="40" height="40" alt="Nuxt.js"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg" width="40" height="40" alt="Redux"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" width="40" height="40" alt="CSS3"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg" width="40" height="40" alt="Sass"/>
-<img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" width="40" height="40" alt="Tailwind"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/materialui/materialui-original.svg" width="40" height="40" alt="MUI"/>
-<img src="https://raw.githubusercontent.com/chakra-ui/chakra-ui/main/media/logo-colored.svg" width="40" height="40" alt="Chakra UI"/>
-</p>
+**StudioSync — multi-region payroll & contract platform** *(MTN S2, 2024–2026)*
+Acting Technical Lead. Microfrontend architecture, TypeScript microservices, PostgreSQL. Replaced spreadsheet-based operations with an integrated platform managing time, compliance, and workforce utilization across three regions. Led code reviews, onboarded new engineers, and delivered quarterly product demos to executives.
+→ *Case study coming soon.*
 
-### Backend
-<p>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" width="40" height="40" alt="Node.js"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" width="40" height="40" alt="Express"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nestjs/nestjs-original.svg" width="40" height="40" alt="NestJS"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" width="40" height="40" alt="FastAPI"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" width="40" height="40" alt="Spring"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="40" height="40" alt="Java"/>
-</p>
+**Bayobab Client Portal** *(Accenture / MTN, 2024–2026)*
+Frontend architecture and backend migration from Java to TypeScript. Contributed to product discovery, sprint planning, and architectural direction. Mentored junior developers.
 
-### Database
-<p>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" width="40" height="40" alt="MongoDB"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" width="40" height="40" alt="PostgreSQL"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" width="40" height="40" alt="MySQL"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-original.svg" width="40" height="40" alt="SQL Server"/>
-<img src="https://www.vectorlogo.zone/logos/elastic/elastic-icon.svg" width="40" height="40" alt="Elasticsearch"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sequelize/sequelize-original.svg" width="40" height="40" alt="Sequelize"/>
-<img src="https://www.vectorlogo.zone/logos/prismaio/prismaio-icon.svg" width="40" height="40" alt="Prisma"/>
-</p>
-
-### Cloud & DevOps
-<p>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" width="40" height="40" alt="Azure"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" width="40" height="40" alt="AWS"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg" width="40" height="40" alt="GCP"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" width="40" height="40" alt="Docker"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="40" height="40" alt="Git"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="40" height="40" alt="GitHub"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg" width="40" height="40" alt="GitLab"/>
-<img src="https://www.vectorlogo.zone/logos/vercel/vercel-icon.svg" width="40" height="40" alt="Vercel"/>
-</p>
-
-### Testing & Quality
-<p>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jest/jest-plain.svg" width="40" height="40" alt="Jest"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/selenium/selenium-original.svg" width="40" height="40" alt="Selenium"/>
-<img src="https://www.vectorlogo.zone/logos/mochajs/mochajs-icon.svg" width="40" height="40" alt="Mocha"/>
-<img src="https://www.vectorlogo.zone/logos/jestjsio/jestjsio-icon.svg" width="40" height="40" alt="Testing Library"/>
-</p>
-
-### Design & Tools
-<p>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" width="40" height="40" alt="Figma"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-original.svg" width="40" height="40" alt="Photoshop"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/xd/xd-original.svg" width="40" height="40" alt="Adobe XD"/>
-<img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" width="40" height="40" alt="Postman"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jira/jira-original.svg" width="40" height="40" alt="Jira"/>
-<img src="https://www.vectorlogo.zone/logos/storybookjs/storybookjs-icon.svg" width="40" height="40" alt="Storybook"/>
-</p>
+**e-Teller App** *(Nybble Technologies / NMB Bank Tanzania, 2023)*
+Frontend engineer. Built React/Redux components and led on-site testing and deployment in Dar es Salaam.
 
 ---
 
+## Get in touch
 
-<div align="center">
-  
-### 💡 Open to collaborations in React, TypeScript, Cloud Architecture, and AI-powered solutions
-
-</div>
+- **Email** — mokhatla.mzwakhe@gmail.com
+- **LinkedIn** — [mzwakhe-mokhatla](https://linkedin.com/in/mzwakhe-mokhatla-1203a7188)
+- **Location** — Pretoria, South Africa (UTC+2)
